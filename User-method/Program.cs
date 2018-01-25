@@ -8,8 +8,8 @@ namespace AccountHolder
         {
             string firstName;
             string lastName;
-            bool isAnAccountOwner;
-            int loginPin;
+            int loginPin = 0;
+            string accountholder;
 
             Console.Write("Please enter your first name: ");
             firstName = Console.ReadLine();
@@ -17,13 +17,20 @@ namespace AccountHolder
             Console.Write("Please enter your last name: ");
             lastName = Console.ReadLine();
 
-            Console.WriteLine("Thank you, {0} {1}.", firstName, lastName);
-            Console.ReadLine();
+            Console.WriteLine($"Thank you, {firstName} {lastName}.");
+            //            Console.ReadLine();
+            
+            do
+            {
+               Console.WriteLine("Are you account holder?");
+                accountholder = Console.ReadLine();
 
-            Console.Write("Are you an Account holder?");
+
+            } while (accountholder.ToLower() != "yes");
+            
+            Console.WriteLine("Account holder " + accountholder);
             Console.ReadLine();
         }
-    }
 
-   
+    }
 }
