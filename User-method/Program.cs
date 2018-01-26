@@ -10,26 +10,21 @@ namespace AccountHolder
         public static void Main()
         {
             string accountholder;
-
             var user = new User
             {
                 FirstName = AskQuestion("Please enter your first name: "),
                 LastName = AskQuestion("Please enter your last name: ")
             };
-
-            WriteLine($"Thank you, {user.FullName}.");
-    
+            WriteLine($"Thank you, {user.FullName}.");   
             do
             {
               accountholder = AskQuestion("Are you account holder? | (Yes/No)");
             } while (accountholder.ToLower() != "yes");
-
             WriteLine($"Thank you {user.FullName}.");
 
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
             WriteLine($"Your login pin:  {user.PinNumber}");
-
             Console.ReadLine();
         }
         private static string AskQuestion(string question)
@@ -37,8 +32,6 @@ namespace AccountHolder
             Console.WriteLine(question);
             return Console.ReadLine();
         }
-
-
         /// <summary>
         /// Ask a question user via console and get a numberic respose?
         /// </summary>
@@ -55,8 +48,7 @@ namespace AccountHolder
                 return AskIntQuestion(question, length);
             }
 
-            if (int.TryParse(userInput, out var input)) {return input;}
-
+            if (int.TryParse(userInput, out var input)) return input;
             WriteLine("Please try again!");
             return AskIntQuestion(question, length);
         }
