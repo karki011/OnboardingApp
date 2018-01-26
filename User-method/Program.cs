@@ -1,4 +1,5 @@
 ﻿using System;
+using static System.Console;
 
 namespace AccountHolder
 {
@@ -6,31 +7,33 @@ namespace AccountHolder
     {
         public static void Main()
         {
-            string firstName;
-            string lastName;
-            int loginPin = 0;
             string accountholder;
 
-            Console.Write("Please enter your first name: ");
-            firstName = Console.ReadLine();
+            Write("Please enter your first name: ");
+            var firstName = ReadLine();
 
-            Console.Write("Please enter your last name: ");
-            lastName = Console.ReadLine();
+            Write("Please enter your last name: ");
+            var lastName = ReadLine();
 
-            Console.WriteLine($"Thank you, {firstName} {lastName}.");
-            //            Console.ReadLine();
-            
+            WriteLine($"Thank you, {firstName} {lastName}.");
             do
             {
-               Console.WriteLine("Are you account holder?");
-                accountholder = Console.ReadLine();
-
-
+                WriteLine("Are you account holder?");
+                accountholder = ReadLine();
             } while (accountholder.ToLower() != "yes");
-            
-            Console.WriteLine("Account holder " + accountholder);
-            Console.ReadLine();
+
+            WriteLine($"Thank you {firstName} {lastName}.");
+
+            WriteLine("Please enter your account pin number.");
+            var userInput = ReadLine();
+            var loginPin = Convert.ToInt32(userInput);
+            WriteLine($"Your login pin:  {loginPin}");
+            NewMethod();
         }
 
+        private static void NewMethod()
+        {
+            var readLine = ReadLine();
+        }
     }
 }
