@@ -1,39 +1,64 @@
-﻿using System;
+﻿using OnboardingApp;
+using System;
+using System.Reflection.Metadata.Ecma335;
 using static System.Console;
 
 namespace AccountHolder
 {
-    class User
+    class OnboardingApp
     {
         public static void Main()
         {
             string accountholder;
 
-            Write("Please enter your first name: ");
-            var firstName = ReadLine();
+            var user = new User
+            {
+                FirstName = AskQuestion("Please enter your first name: "),
+                LastName = AskQuestion("Please enter your last name: ")
+            };
 
-            Write("Please enter your last name: ");
-            var lastName = ReadLine();
-
-            WriteLine($"Thank you, {firstName} {lastName}.");
+            WriteLine($"Thank you, {user.FullName}.");
+    
             do
             {
-                WriteLine("Are you account holder?");
-                accountholder = ReadLine();
+              accountholder = AskQuestion("Are you account holder? | (Yes/No)");
             } while (accountholder.ToLower() != "yes");
 
-            WriteLine($"Thank you {firstName} {lastName}.");
+            WriteLine($"Thank you {user.FullName}.");
 
-            WriteLine("Please enter your account pin number.");
-            var userInput = ReadLine();
-            var loginPin = Convert.ToInt32(userInput);
-            WriteLine($"Your login pin:  {loginPin}");
-            NewMethod();
+            user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
+
+            WriteLine($"Your login pin:  {user.PinNumber}");
+
+            Console.ReadLine();
+        }
+        private static string AskQuestion(string question)
+        {
+            Console.WriteLine(question);
+            return Console.ReadLine();
         }
 
-        private static void NewMethod()
+
+        /// <summary>
+        /// Ask a question user via console and get a numberic respose?
+        /// </summary>
+        /// <param name="question">Please enter your 4 digit pin?</param>
+        /// <param name="length">number of int</param>
+        /// <returns></returns>
+        static int AskIntQuestion(string question, int length = 0)
         {
-            var readLine = ReadLine();
+            var userInput = AskQuestion(question);
+
+            if (length > 0 && length != userInput.Length)
+            {
+                WriteLine("Invalid Entry!!");
+                return AskIntQuestion(question, length);
+            }
+
+            if (int.TryParse(userInput, out var input)) {return input;}
+
+            WriteLine("Please try again!");
+            return AskIntQuestion(question, length);
         }
     }
 }
