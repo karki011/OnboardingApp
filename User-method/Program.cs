@@ -25,12 +25,12 @@ namespace AccountHolder
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
             WriteLine($"Your login pin:  {user.PinNumber}");
-            Console.ReadLine();
+            ReadLine();
         }
         private static string AskQuestion(string question)
         {
-            Console.WriteLine(question);
-            return Console.ReadLine();
+            WriteLine(question);
+            return ReadLine();
         }
         /// <summary>
         /// Ask a question user via console and get a numberic respose?
