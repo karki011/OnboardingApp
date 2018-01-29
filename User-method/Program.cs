@@ -30,6 +30,18 @@ namespace AccountHolder
                 WriteLine("{0}. {1}", (int)item, item);
             }
 
+            Read:
+            WriteLine("Select your Account type: ");
+            var select = ReadLine();
+            int option;
+            if (!int.TryParse(select, out option))
+            {
+                goto Read;
+            }
+
+            option = Convert.ToInt32(select);
+            WriteLine("You have seleceted: {0}", Enum.ToObject(typeof(AccountsType), option));
+
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
             WriteLine("Thank you for using our service.");
