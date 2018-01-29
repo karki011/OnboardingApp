@@ -1,6 +1,7 @@
 ﻿using OnboardingApp;
 using System;
 using System.Reflection.Metadata.Ecma335;
+using System.Security.Cryptography.X509Certificates;
 using static System.Console;
 
 namespace AccountHolder
@@ -22,9 +23,16 @@ namespace AccountHolder
             } while (accountholder.ToLower() != "yes");
             WriteLine($"Thank you {user.FullName}.");
 
+            WriteLine("What type of account do you have?");
+
+            foreach (AccountsType item in Enum.GetValues(typeof(AccountsType)))
+            {
+                WriteLine("{0}. {1}", (int)item, item);
+            }
+
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
-            WriteLine($"Your login pin:  {user.PinNumber}");
+            WriteLine("Thank you for using our service.");
             ReadLine();
         }
         private static string AskQuestion(string question)
@@ -52,5 +60,15 @@ namespace AccountHolder
             WriteLine("Please try again!");
             return AskIntQuestion(question, length);
         }
+
+        public enum AccountsType
+        {
+            Checking = 1,
+            Saving = 2,
+            MoneyMarket = 3,
+            Mortage = 4
+        }
+
+
     }
 }
