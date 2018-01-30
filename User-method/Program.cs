@@ -2,7 +2,6 @@
 using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
-using static System.Console;
 
 namespace AccountHolder
 {
@@ -10,48 +9,59 @@ namespace AccountHolder
     {
         public static void Main()
         {
-            string accountholder;
-            var user = new User
+            string Accountholder;
+            var user = new User();
+
+            while (string.IsNullOrEmpty(user.FirstName))
             {
-                FirstName = AskQuestion("Please enter your first name: "),
-                LastName = AskQuestion("Please enter your last name: ")
-            };
-            WriteLine($"Thank you, {user.FullName}.");   
+                user.FirstName = AskQuestion("Please enter your first name: ");
+            }
+            while (string.IsNullOrEmpty(user.LastName))
+            {
+                user.LastName = AskQuestion("Please enter your last name: ");
+            }
+
+            Console.WriteLine($"Thank you, {user.FullName}.");   
             do
             {
-              accountholder = AskQuestion("Are you account holder? | (Yes/No)");
-            } while (accountholder.ToLower() != "yes");
-            WriteLine($"Thank you {user.FullName}.");
+              Accountholder = AskQuestion("Are you account holder? | (Yes/No)");
+            } while (Accountholder.ToLower() != "yes");
+            Console.WriteLine($"Thank you {user.FullName}.");
 
-            WriteLine("What type of account do you have?");
+            Console.WriteLine("What type of account do you have?");
 
             foreach (AccountsType item in Enum.GetValues(typeof(AccountsType)))
             {
-                WriteLine("{0}. {1}", (int)item, item);
+                Console.WriteLine("{0}. {1}", (int)item, item);
             }
 
             Read:
-            WriteLine("Select your Account type: ");
-            var select = ReadLine();
+            Console.WriteLine("Select your Account type: ");
+            var select = Console.ReadLine();
             int option;
             if (!int.TryParse(select, out option))
             {
                 goto Read;
             }
-
             option = Convert.ToInt32(select);
-            WriteLine("You have seleceted: {0}", Enum.ToObject(typeof(AccountsType), option));
+            Console.WriteLine("You have seleceted: {0}", Enum.ToObject(typeof(AccountsType), option));
 
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
-            WriteLine("Thank you for using our service.");
-            ReadLine();
+            Console.WriteLine("Thank you for using our service.");
+            Console.ReadLine();
         }
+
         private static string AskQuestion(string question)
         {
-            WriteLine(question);
-            return ReadLine();
+            while (true)
+            {
+                Console.WriteLine(question);
+                if (Console.ReadLine().Length != 0) return Console.ReadLine();
+                Console.WriteLine("You didn't enter an answer");
+            }
         }
+
         /// <summary>
         /// Ask a question user via console and get a numberic respose?
         /// </summary>
@@ -64,12 +74,12 @@ namespace AccountHolder
 
             if (length > 0 && length != userInput.Length)
             {
-                WriteLine("Invalid Entry!!");
+                Console.WriteLine("Invalid Entry!!");
                 return AskIntQuestion(question, length);
             }
 
             if (int.TryParse(userInput, out var input)) return input;
-            WriteLine("Please try again!");
+            Console.WriteLine("Please try again!");
             return AskIntQuestion(question, length);
         }
 
