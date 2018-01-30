@@ -3,7 +3,7 @@ using System;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography.X509Certificates;
 
-namespace AccountHolder
+namespace OnboardingApp
 {
     class OnboardingApp
     {
@@ -29,8 +29,7 @@ namespace AccountHolder
             Console.WriteLine($"Thank you {user.FullName}.");
 
             Console.WriteLine("What type of account do you have?");
-
-            foreach (AccountsType item in Enum.GetValues(typeof(AccountsType)))
+            foreach (Accounts.AccountsType item in Enum.GetValues(typeof(Accounts.AccountsType)))
             {
                 Console.WriteLine("{0}. {1}", (int)item, item);
             }
@@ -44,7 +43,7 @@ namespace AccountHolder
                 goto Read;
             }
             option = Convert.ToInt32(select);
-            Console.WriteLine("You have seleceted: {0}", Enum.ToObject(typeof(AccountsType), option));
+            Console.WriteLine("You have seleceted: {0}", Enum.ToObject(typeof(Accounts.AccountsType), option));
 
             user.PinNumber = AskIntQuestion("Please enter your account pin number.", 4);
 
@@ -52,6 +51,11 @@ namespace AccountHolder
             Console.ReadLine();
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="question"></param>
+        /// <returns></returns>
         private static string AskQuestion(string question)
         {
             while (true)
@@ -61,36 +65,17 @@ namespace AccountHolder
                 Console.WriteLine("You didn't enter an answer");
             }
         }
-
-        /// <summary>
-        /// Ask a question user via console and get a numberic respose?
-        /// </summary>
-        /// <param name="question">Please enter your 4 digit pin?</param>
-        /// <param name="length">number of int</param>
-        /// <returns></returns>
         static int AskIntQuestion(string question, int length = 0)
         {
             var userInput = AskQuestion(question);
-
             if (length > 0 && length != userInput.Length)
             {
                 Console.WriteLine("Invalid Entry!!");
                 return AskIntQuestion(question, length);
             }
-
             if (int.TryParse(userInput, out var input)) return input;
             Console.WriteLine("Please try again!");
             return AskIntQuestion(question, length);
         }
-
-        public enum AccountsType
-        {
-            Checking = 1,
-            Saving = 2,
-            MoneyMarket = 3,
-            Mortage = 4
-        }
-
-
     }
 }
